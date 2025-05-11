@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "./ui/button";
 import { AlertTriangle, RefreshCw } from "lucide-react";
+import { Button } from "../ui/button";
 
 export function ErrorDisplay({
   title = "Something went wrong",

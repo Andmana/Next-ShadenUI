@@ -1,82 +1,84 @@
-import Image from "next/image";
 import CardList from "./CardList";
-import { Search } from "lucide-react";
 import axios from "axios";
+import { Suspense } from "react";
+import { ArticlesSkeleton } from "@/components/loadings/ArticleSkeleton";
+import { ErrorDisplay } from "@/components/errorDIsplay/ErrorDisplay";
+import Hero from "./Hero";
 
 const DEFAULT_PAGE = "1";
 const DEFAULT_LIMIT = "9";
 
-const Articles = async ({ searchParams }) => {
+const ArticlesContent = async ({ searchParams }) => {
+  // Validate and sanitize searchParams
   const { page, limit, category, title } = searchParams || {};
 
+  // Construct query parameters safely
   const queryParams = new URLSearchParams();
-  // Always set page and limit with defaults as fallback
   queryParams.set("page", page || DEFAULT_PAGE);
   queryParams.set("limit", limit || DEFAULT_LIMIT);
-  // Only include category and title if they exist (non-empty)
-  if (category) queryParams.set("category", category);
-  if (title) queryParams.set("title", title);
+  if (category) queryParams.set("category", encodeURIComponent(category));
+  if (title) queryParams.set("title", encodeURIComponent(title));
 
-  const res = await axios.get(
-    `https://test-fe.mysellerpintar.com/api/articles?${queryParams.toString()}`
-  );
+  try {
+    const res = await axios.get(
+      `https://test-fe.mysellerpintar.com/api/articles?${queryParams.toString()}`,
+      {
+        timeout: 5000,
+        validateStatus: (status) => status >= 200 && status < 300,
+      }
+    );
 
-  const articles = res.data.data;
+    if (!res.data?.data) {
+      throw new Error("Invalid data structure from API");
+    }
 
+    const articles = res.data.data;
+    const totalArticles = res.data.total || 0;
+
+    return (
+      <>
+        {totalArticles > 0 && (
+          <p className="text-base font-medium hidden sm:block">
+            Showing: {articles.length} of {totalArticles} articles
+          </p>
+        )}
+
+        {articles.length === 0 ? (
+          <div className="p-4 bg-yellow-50 border border-yellow-200 rounded text-yellow-600">
+            No articles found matching your criteria
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-15 gap-x-4">
+            <CardList articles={articles} />
+          </div>
+        )}
+      </>
+    );
+  } catch (error) {
+    console.error("Failed to fetch articles:", error);
+
+    return (
+      <ErrorDisplay
+        message={
+          error instanceof Error
+            ? error.message
+            : "Failed to load articles. Please try again later."
+        }
+      />
+    );
+  }
+};
+
+const Articles = async ({ searchParams }) => {
   return (
     <>
-      <header className="relative w-full h-[560px] sm:h-[500px] bg-blue-500">
-        <Image
-          src="/bg-hero.jpg"
-          alt="Hero background"
-          fill
-          priority
-          className="object-cover  bg-[#2564ebcc]"
-        />
-        <div className="absolute w-full h-full bg-[#2564ebcc]"></div>
-
-        <div className="absolute top-[138.5px] left-1/2  w-[337px] sm:w-full max-w-[730px] transform -translate-x-1/2 flex flex-col items-center gap-10">
-          <div className="flex flex-col items-center gap-3 text-white text-center">
-            <p className="font-bold text-sm sm:text-base">Blog genzet</p>
-
-            <h1 className="font-medium text-4xl sm:text-5xl ">
-              The Journal : Design Resources, Interviews, and Industry News
-            </h1>
-
-            <p className="text-xl sm:text-2xl">
-              Your daily dose of design insights!
-            </p>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-1.5 items-center justify-center">
-            <div className="w-full sm:w-45 h-10"></div>
-
-            <div className="relative w-100 h-10 ">
-              <input
-                type="text"
-                className="w-full h-full px-3 py-2 ps-8 bg-white rounded-md"
-                placeholder="Search Articles"
-              />
-              <button className="absolute mx-auto opacity-50 hover:opacity-100 left-3 top-1/2 transform -translate-y-1/2 cursor-pointer">
-                <Search size={16} />
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Hero />
 
       <section className="w-full h-fit px-5 py-10 sm:p-25 sm:pt-10 bg-white">
         <div className="w-full h-fit flex flex-col gap-6">
-          <p className="text-base font-medium hidden sm:block">
-            Showing : 20 of 240 articles
-          </p>
-
-          {/* Card Grid */}
-          {articles && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-15 gap-x-4">
-              <CardList articles={articles} />
-            </div>
-          )}
+          <Suspense fallback={<ArticlesSkeleton />}>
+            <ArticlesContent searchParams={searchParams} />
+          </Suspense>
         </div>
       </section>
     </>

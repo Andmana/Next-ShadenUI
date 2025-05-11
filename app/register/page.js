@@ -9,7 +9,9 @@ export default function Register() {
       <main className="bg-white w-full sm:w-[400px] h-full sm:h-fit px-4 py-10 sm:rounded-xl flex flex-col gap-6 justify-center text-sm">
         {/*  */}
         {/* Logo */}
-        <LogoIpsum />
+        <div className="flex justify-center items-center">
+          <LogoIpsum />
+        </div>
 
         {/* Form */}
         <RegisterForm />

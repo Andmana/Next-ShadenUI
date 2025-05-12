@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { LogoIpsum } from "@/components/logo/Logo";
 import LoginForm from "./LoginForm";
 import RedirectSign from "@/components/forms/RedirectSign";
@@ -17,7 +16,7 @@ export default function Login() {
         <LoginForm />
 
         {/* Register Redirect */}
-        <RedirectSign href="Register">Don't have an account?</RedirectSign>
+        <RedirectSign href="Register">Don&apos;t have an account?</RedirectSign>
       </main>
     </div>
   );

@@ -1,7 +1,6 @@
+import ArticleCard from "@/components/cards/ArticleCard";
 import { ErrorDisplay } from "@/components/errorDIsplay/ErrorDisplay";
 import axios from "axios";
-
-const { default: ArticleCard } = require("../ArticleCard");
 
 const OtherArticles = async ({ categoryId }) => {
   const queryParams = new URLSearchParams({ category: categoryId, limit: "3" });

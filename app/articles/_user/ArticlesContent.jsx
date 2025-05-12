@@ -1,7 +1,7 @@
 import { ErrorDisplay } from "@/components/errorDIsplay/ErrorDisplay";
 import axios from "axios";
-import ArticleCard from "./ArticleCard";
 import Pagin from "@/components/pagination/Pagination";
+import ArticleCard from "@/components/cards/ArticleCard";
 
 const DEFAULT_PAGE = "1";
 const DEFAULT_LIMIT = "9";

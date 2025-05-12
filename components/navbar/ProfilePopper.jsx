@@ -4,7 +4,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { LogOut } from "lucide-react";
 import Link from "next/link";
 import LogOutAlert from "./LogOutAlert";
 

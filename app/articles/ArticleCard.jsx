@@ -24,7 +24,10 @@ const ArticleCard = ({ article }) => {
         </Link>
 
         {/* Content */}
-        <p className="text-base text-slate-600">{article.content}</p>
+        <div
+          className="text-base text-slate-600 break-words line-clamp-3 prose max-w-none"
+          dangerouslySetInnerHTML={{ __html: article.content }}
+        />
 
         <p className="w-fit px-3 py-1 rounded-full bg-blue-200">
           <span className="text-sm text-blue-900">{article.category.name}</span>

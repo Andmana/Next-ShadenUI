@@ -35,23 +35,27 @@ const ArticlesContent = async ({ searchParams }) => {
 
     return (
       <>
+        {/* Items number */}
         {totalArticles > 0 && (
           <p className="text-base font-medium hidden sm:block">
             Showing: {articles.length} of {totalArticles} articles
           </p>
         )}
 
+        {/* Articel Cards  */}
         {articles.length === 0 ? (
           <div className="p-4 bg-yellow-50 border border-yellow-200 rounded text-yellow-600">
             No articles found matching your criteria
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-15 gap-x-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-15 gap-x-10">
             {articles.map((article) => (
               <ArticleCard key={article.id} article={article} />
             ))}
           </div>
         )}
+
+        {/* Pagination */}
         <div className=" w-full mt-9 flex justify-center items-center gap-2 text-slate-900">
           <Pagin
             limit={limit || DEFAULT_LIMIT}

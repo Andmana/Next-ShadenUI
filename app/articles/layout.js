@@ -4,11 +4,7 @@ import Image from "next/image";
 export default function ArticlesLayout({ children }) {
   return (
     <div className="relative min-h-screen sm:min-h-svh text-sm flex flex-col">
-      {/* Navbar components */}
-      <Navbar />
-
-      {/* content */}
-      <main className="flex-1 w-full bg-white">{children}</main>
+      {children}
 
       <footer className="w-full h-25 flex justify-center items-center bg-[#2563EBDB]">
         <div className="flex gap-4">

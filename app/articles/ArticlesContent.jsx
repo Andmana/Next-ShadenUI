@@ -1,11 +1,25 @@
 import { ErrorDisplay } from "@/components/errorDIsplay/ErrorDisplay";
 import axios from "axios";
 import ArticleCard from "./ArticleCard";
+import Pagin from "@/components/pagination/Pagination";
 
-const ArticlesContent = async ({ queriesString }) => {
+const DEFAULT_PAGE = "1";
+const DEFAULT_LIMIT = "9";
+
+const ArticlesContent = async ({ searchParams }) => {
+  // Validate and sanitize searchParams
+  const { page, limit, category, title } = searchParams || {};
+
+  // Construct query parameters safely
+  const queryParams = new URLSearchParams();
+  queryParams.set("page", page || DEFAULT_PAGE);
+  queryParams.set("limit", limit || DEFAULT_LIMIT);
+  if (category) queryParams.set("category", encodeURIComponent(category));
+  if (title) queryParams.set("title", encodeURIComponent(title));
+
   try {
     const res = await axios.get(
-      `https://test-fe.mysellerpintar.com/api/articles?${queriesString}`,
+      `https://test-fe.mysellerpintar.com/api/articles?${queryParams.toString()}`,
       {
         timeout: 5000,
         validateStatus: (status) => status >= 200 && status < 300,

@@ -12,7 +12,7 @@ const Navbar = async ({ className }) => {
     <nav
       className={cn(
         className,
-        "z-10 top-0 left-0 w-full py-4 px-5 sm:py-8 sm:px-15 bg-white flex items-center justify-between"
+        "static z-10 top-0 left-0 w-full py-4 px-5 sm:py-8 sm:px-15 bg-white flex items-center justify-between"
       )}
     >
       <LogoIpsum />

@@ -15,7 +15,7 @@ function PopoverTrigger({ ...props }) {
 
 function PopoverContent({
   className,
-  align = "end",
+  align = "center",
   sideOffset = 4,
   ...props
 }) {

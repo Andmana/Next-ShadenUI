@@ -13,7 +13,7 @@ const ProfilePopper = ({ children }) => {
       <PopoverTrigger asChild>
         <Button variant="primary">{children}</Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[224px] border-1 text-sm">
+      <PopoverContent align="end" className="w-[224px] border-1 text-sm">
         <div className="p-1.25 h-10 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
           <Link href="/profile" className="text-slate-600">
             My Account

@@ -21,9 +21,10 @@ const Article = async ({ params }) => {
     <>
       <Navbar />
 
-      {/* content */}
+      {/* Main Content */}
       <main className="flex-1 w-full bg-white px-5 sm:px-40 py-10">
         <article className="flex flex-col gap-10 relative ">
+          {/* Article Header */}
           <header className="flex flex-col items-center gap-4">
             <p className="text-slate-600 flex gap-1">
               <span>{formatToLongDate(article.updatedAt)}</span>
@@ -32,17 +33,28 @@ const Article = async ({ params }) => {
             </p>
             <h1 className="font-semibold !text-3xl">{article.title}</h1>
           </header>
+
+          {/* Article Image */}
           <img
             src={article.imageUrl || "/bg-hero.jpg"}
-            alt="article image"
+            alt={article.title || "Article image"}
             className="w-full h-120 rounded-md object-cover object-center"
           />
 
-          <div dangerouslySetInnerHTML={{ __html: article.content }} />
+          {/* Article Content */}
+          <div
+            className="prose max-w-none"
+            dangerouslySetInnerHTML={{ __html: article.content }}
+          />
         </article>
       </main>
+
+      {/* Related Articles */}
       <Suspense fallback={<ArticlesSkeleton />}>
-        <OtherArticles categoryId={article.categoryId} />
+        <OtherArticles
+          categoryId={article.categoryId}
+          currentArticleId={article.id}
+        />
       </Suspense>
     </>
   );

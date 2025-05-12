@@ -1,10 +1,5 @@
 "use client";
 
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { Search } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect, useCallback, useRef } from "react";
@@ -15,9 +10,6 @@ const InputPopper = ({ category }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-
-  // Create a ref for the input element to control focus
-  const inputRef = useRef(null);
 
   // Debounce function
   const debounce = (func, delay) => {
@@ -58,11 +50,6 @@ const InputPopper = ({ category }) => {
       setSearchResults([]);
     } finally {
       setIsLoading(false);
-
-      // Ensure input stays focused after data is fetched
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
     }
   };
 
@@ -80,61 +67,55 @@ const InputPopper = ({ category }) => {
     setIsPopoverOpen(!!value); // Open popover when typing
   };
 
-  useEffect(() => {
-    // Ensure input is focused when the component is mounted or searchTerm changes
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [searchTerm]); // Rerun focus logic when searchTerm changes
-
   return (
-    <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
-      <PopoverTrigger asChild>
-        <div className="relative w-100 h-10">
-          <input
-            ref={inputRef} // Attach ref to the input element
-            type="text"
-            value={searchTerm}
-            onChange={handleChange}
-            className="w-full h-full px-3 py-2 ps-8 bg-white rounded-md"
-            placeholder="Search Articles"
-          />
-          <button
-            type="button"
-            className="absolute mx-auto opacity-50 hover:opacity-100 left-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
-          >
-            <Search size={16} />
-          </button>
-        </div>
-      </PopoverTrigger>
-      <PopoverContent
-        align="end"
-        className="w-100 border-1 text-sm max-h-60 overflow-y-auto"
-      >
-        {isLoading ? (
-          <div className="p-2 text-center">Searching...</div>
-        ) : searchResults.length > 0 ? (
-          searchResults.map((article) => (
-            <div
-              key={article.id}
-              className="p-1.25 h-10 hover:bg-accent hover:text-accent-foreground flex items-center"
-            >
-              <Link
-                href={`/articles/${article.id}`}
-                className="text-slate-900 underline font-medium w-full"
-                onClick={() => setIsPopoverOpen(false)}
+    <>
+      <div className="relative w-100 h-10">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={handleChange}
+          className="w-full h-full px-3 py-2 ps-8 bg-white rounded-md"
+          placeholder="Search Articles"
+          onFocus={() => setIsPopoverOpen(true)}
+          onBlur={() => setIsPopoverOpen(false)}
+        />
+        <button
+          type="button"
+          className="absolute mx-auto opacity-50 hover:opacity-100 left-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+        >
+          <Search size={16} />
+        </button>
+
+        <div
+          className="absolute w-full top-11/10 rounded-md px-3 py-2 bg-white"
+          style={{ scale: isPopoverOpen ? 1 : 0 }}
+          aria-hidden={isPopoverOpen ? false : true}
+        >
+          {isLoading ? (
+            <div className="py-2 text-center">Searching...</div>
+          ) : searchResults.length > 0 ? (
+            searchResults.map((article) => (
+              <div
+                key={article.id}
+                className="p-1.25 h-10 hover:bg-accent hover:text-accent-foreground flex items-center"
               >
-                {article.title}
-              </Link>
-            </div>
-          ))
-        ) : searchTerm ? (
-          <div className="p-2 text-center">No results found</div>
-        ) : (
-          <div className="p-2 text-center">Start typing to search</div>
-        )}
-      </PopoverContent>
-    </Popover>
+                <Link
+                  href={`/articles/${article.id}`}
+                  className="text-slate-900 underline font-medium w-full"
+                  onClick={() => setIsPopoverOpen(false)}
+                >
+                  {article.title}
+                </Link>
+              </div>
+            ))
+          ) : searchTerm ? (
+            <div className="p-2 text-center">No results found</div>
+          ) : (
+            <div className="p-2 text-center">Start typing to search</div>
+          )}
+        </div>
+      </div>
+    </>
   );
 };
 

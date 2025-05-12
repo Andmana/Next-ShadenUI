@@ -3,10 +3,11 @@ import { ArticlesSkeleton } from "@/components/loadings/ArticleSkeleton";
 import Hero from "./Hero";
 import ArticlesContent from "./ArticlesContent";
 import Navbar from "@/components/navbar/Navbar";
+import Footer from "@/components/footer/Footer";
 
 const Articles = async ({ searchParams }) => {
   return (
-    <>
+    <div className="relative min-h-screen sm:min-h-svh text-sm flex flex-col">
       <Navbar className="static sm:fixed sm:bg-transparent" />
 
       {/* content */}
@@ -21,7 +22,9 @@ const Articles = async ({ searchParams }) => {
           </div>
         </section>
       </main>
-    </>
+
+      <Footer />
+    </div>
   );
 };
 

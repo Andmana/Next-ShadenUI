@@ -7,6 +7,7 @@ import {
 import Link from "next/link";
 import LogOutAlert from "./LogOutAlert";
 import { verifySession } from "@/lib/sessions";
+import { LogOut } from "lucide-react";
 
 const ProfilePopper = async () => {
   const session = await verifySession();
@@ -37,7 +38,15 @@ const ProfilePopper = async () => {
 
         <span className="h-[3px] w-full bg-slate-400" />
 
-        <LogOutAlert />
+        <LogOutAlert>
+          <Button
+            variant="primary"
+            className="!p-1.25 w-full rounded-none flex justify-start items-center gap-2.5 hover:bg-accent hover:text-accent-foreground focus:text-accent-foreground"
+          >
+            <LogOut color="red" size={16} />
+            <span className="text-red-500 font-medium">Log Out</span>
+          </Button>
+        </LogOutAlert>
       </PopoverContent>
     </Popover>
   );

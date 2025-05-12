@@ -8,7 +8,7 @@ const DEFAULT_LIMIT = "9";
 
 const Articles = async ({ searchParams }) => {
   // Validate and sanitize searchParams
-  const { page, limit, category, title } = searchParams || {};
+  const { page, limit, category, title } = (await searchParams) || {};
 
   // Construct query parameters safely
   const queryParams = new URLSearchParams();

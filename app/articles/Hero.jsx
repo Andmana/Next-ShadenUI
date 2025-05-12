@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Search } from "lucide-react";
+import SelectCategories from "./SelectCategories";
 
 export default function Hero() {
   return (
@@ -25,7 +26,9 @@ export default function Hero() {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-1.5 items-center justify-center">
-          <div className="w-full sm:w-45 h-10"></div>
+          <div className="w-full sm:w-45 h-10 bg-white rounded-md">
+            <SelectCategories />
+          </div>
           <div className="relative w-100 h-10">
             <input
               type="text"

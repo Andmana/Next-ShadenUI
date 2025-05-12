@@ -7,7 +7,7 @@ const ArticleCard = ({ article }) => {
       <img
         src={article.imageUrl || "/bg-hero.jpg"}
         alt="Article cover"
-        className="w-full h-50 sm:h-60 object-cover object-center rounded-xl"
+        className="w-full aspect-3/2 sm:h-60 object-cover object-center rounded-xl"
       />
       <div className="w-full flex flex-col gap-2">
         {/* Update date */}

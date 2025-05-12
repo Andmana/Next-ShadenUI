@@ -46,7 +46,7 @@ const Article = async ({ params }) => {
             <img
               src={article.imageUrl || "/bg-hero.jpg"}
               alt={article.title || "Article image"}
-              className="w-full h-120 rounded-md object-cover object-center"
+              className="w-full aspect-5/3 md:h-120 rounded-md object-cover object-center"
             />
 
             {/* Article Content */}

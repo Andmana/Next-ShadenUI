@@ -68,7 +68,7 @@ export function SelectCategories({ setCategory }) {
         <SelectValue placeholder="Select category" />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value>All categories</SelectItem>
+        <SelectItem value={undefined}>{" all"}</SelectItem>
         {categories.map((category) => (
           <SelectItem value={category.id} key={category.id}>
             {category.name}

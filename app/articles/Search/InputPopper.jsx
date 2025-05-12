@@ -2,7 +2,7 @@
 
 import { Search } from "lucide-react";
 import Link from "next/link";
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useCallback } from "react";
 import axios from "axios";
 
 const InputPopper = ({ category }) => {
@@ -11,6 +11,8 @@ const InputPopper = ({ category }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
+  const params = { title: searchTerm.trim() };
+  if (category) params.category = category;
   // Debounce function
   const debounce = (func, delay) => {
     let timer;
@@ -29,14 +31,6 @@ const InputPopper = ({ category }) => {
 
     setIsLoading(true);
     try {
-      const params = {
-        title: term,
-      };
-
-      if (category && category.length > 1) {
-        params.category = category;
-      }
-
       const response = await axios.get(
         "https://test-fe.mysellerpintar.com/api/articles",
         {
@@ -67,6 +61,8 @@ const InputPopper = ({ category }) => {
     setIsPopoverOpen(!!value); // Open popover when typing
   };
 
+  const queryParams = new URLSearchParams({ ...params });
+
   return (
     <>
       <div className="relative w-100 h-10">
@@ -79,12 +75,11 @@ const InputPopper = ({ category }) => {
           onFocus={() => setIsPopoverOpen(true)}
           onBlur={() => setIsPopoverOpen(false)}
         />
-        <button
-          type="button"
-          className="absolute mx-auto opacity-50 hover:opacity-100 left-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
-        >
-          <Search size={16} />
-        </button>
+        <div className="absolute mx-auto opacity-50 hover:opacity-100 left-3 top-1/2 transform -translate-y-1/2 cursor-pointer">
+          <Link href={`/articles?${queryParams.toString()}`}>
+            <Search size={16} />
+          </Link>
+        </div>
 
         <div
           className="absolute w-full top-11/10 rounded-md px-3 py-2 bg-white"

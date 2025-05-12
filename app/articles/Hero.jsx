@@ -1,6 +1,4 @@
 import Image from "next/image";
-import { Search } from "lucide-react";
-import SelectCategories from "./Search/SelectCategories";
 import SearchArticles from "./Search/SearchArticles";
 
 export default function Hero() {

@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Select,
   SelectContent,
@@ -5,51 +7,73 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
-export async function SelectCategories() {
-  let categories = [];
+export function SelectCategories({ setCategory }) {
+  const [categories, setCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  try {
-    // Using fetch instead of axios for better compatibility with Next.js
-    const res = await axios.get(
-      "https://test-fe.mysellerpintar.com/api/categories",
-      {
-        timeout: 5000,
-        validateStatus: (status) => status >= 200 && status < 300,
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(
+          "https://test-fe.mysellerpintar.com/api/categories",
+          {
+            timeout: 5000,
+            validateStatus: (status) => status >= 200 && status < 300,
+          }
+        );
+
+        if (!response.data?.data) {
+          throw new Error("Invalid data structure from API");
+        }
+
+        // Filter out categories with empty IDs or names
+        const validCategories = response.data.data.filter(
+          (category) => category.id && category.name
+        );
+        setCategories(validCategories);
+      } catch (err) {
+        console.error("Failed to fetch categories:", err);
+        setError(err.message || "Failed to load categories");
+      } finally {
+        setIsLoading(false);
       }
+    };
+
+    fetchCategories();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-10 bg-gray-100 rounded-md animate-pulse"></div>
     );
+  }
 
-    if (!res.data?.data) {
-      throw new Error("Invalid data structure from API");
-    }
-
-    categories = res.data.data || [];
-  } catch (error) {
-    console.error("Failed to fetch categories:", error);
-    // Optionally return a fallback UI or empty state
+  if (error) {
     return (
       <Select disabled>
         <SelectTrigger className="w-full">
-          <SelectValue placeholder="Failed to load categories" />
+          <SelectValue placeholder={error} />
         </SelectTrigger>
       </Select>
     );
   }
 
   return (
-    <Select name="category">
+    <Select onValueChange={(value) => setCategory(value)}>
       <SelectTrigger className="w-full">
         <SelectValue placeholder="Select category" />
       </SelectTrigger>
       <SelectContent>
-        {categories
-          .filter((category) => category.id !== "")
-          .map((category) => (
-            <SelectItem value={category.id} key={category.id}>
-              {category.name}
-            </SelectItem>
-          ))}
+        <SelectItem value>All categories</SelectItem>
+        {categories.map((category) => (
+          <SelectItem value={category.id} key={category.id}>
+            {category.name}
+          </SelectItem>
+        ))}
       </SelectContent>
     </Select>
   );

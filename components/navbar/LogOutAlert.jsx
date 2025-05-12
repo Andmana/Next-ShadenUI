@@ -22,7 +22,7 @@ export default function LogOutAlert() {
         {
           <Button
             variant="primary"
-            className="!p-1.25 w-full rounded-none flex justify-start items-center gap-2.5 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+            className="!p-1.25 w-full rounded-none flex justify-start items-center gap-2.5 hover:bg-accent hover:text-accent-foreground focus:text-accent-foreground"
           >
             <LogOut color="red" size={16} />
             <span className="text-red-500 font-medium">Log Out</span>

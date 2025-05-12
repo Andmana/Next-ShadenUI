@@ -1,13 +1,8 @@
-import Image from "next/image";
-import { verifySession } from "@/lib/sessions";
 import { LogoIpsum } from "../logo/Logo";
 import ProfilePopper from "./ProfilePopper";
 import { cn } from "@/lib/utils";
 
-const Navbar = async ({ className }) => {
-  const session = await verifySession();
-  const username = session.username;
-
+const Navbar = ({ className }) => {
   return (
     <nav
       className={cn(
@@ -17,20 +12,7 @@ const Navbar = async ({ className }) => {
     >
       <LogoIpsum />
 
-      <ProfilePopper>
-        {/* User Profile  */}
-        <div className="flex items-center gap-1.5">
-          <div className="w-8 h-8 rounded-full bg-[#BFDBFE] flex justify-center items-center ">
-            <span className="text-base font-medium">
-              {username[0].toUpperCase()}
-            </span>
-          </div>
-          <span className="hidden sm:block text-white underline">
-            {/* Dynamic name */}
-            {username}
-          </span>
-        </div>
-      </ProfilePopper>
+      <ProfilePopper />
     </nav>
   );
 };

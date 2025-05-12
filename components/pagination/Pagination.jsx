@@ -3,64 +3,101 @@
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { Button } from "../ui/button";
-import { ChevronRight } from "lucide-react";
-import { ChevronLeft } from "lucide-react";
-import { useSearchParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useSearchParams, usePathname } from "next/navigation";
 
-const Pagin = ({ page, itemsCount, limit }) => {
+const Pagin = ({ _page, limit, totalItems }) => {
+  const page = parseInt(_page);
   const searchParams = useSearchParams();
-  // Check if there's a next page
-  const hasNext = parseInt(itemsCount) === parseInt(limit);
-  // Check if there's a previous page
-  const hasPrevious = parseInt(page) > 1;
+  const pathname = usePathname();
 
-  const nextPageParams = new URLSearchParams(searchParams);
-  nextPageParams.set("page", parseInt(page) + 1);
+  // Calculate total pages
+  const totalPages = Math.ceil(totalItems / limit);
 
-  const prevPageParams = new URLSearchParams(searchParams);
-  prevPageParams.set("page", parseInt(page) - 1);
+  // Navigation helpers
+  const createPageURL = (pageNumber) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", pageNumber.toString());
+    return `${pathname}?${params.toString()}`;
+  };
+
+  // Navigation states
+  const hasNextPage = page < totalPages;
+  const hasPrevPage = page > 1;
+
+  // Show page numbers (improved logic)
+  const visiblePages = () => {
+    const pages = [];
+    const maxVisible = 5; // Maximum pages to show
+
+    // Always show first page
+    pages.push(1);
+
+    // Show pages around current page
+    const start = Math.max(2, page - 1);
+    const end = Math.min(totalPages - 1, page + 1);
+
+    if (start > 2) pages.push("...");
+
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+
+    if (end < totalPages - 1) pages.push("...");
+
+    // Always show last page if different from first
+    if (totalPages > 1) pages.push(totalPages);
+
+    return pages.slice(0, maxVisible);
+  };
 
   return (
     <Pagination>
       <PaginationContent>
-        {/* Disable PaginationPrevious if there's no previous page */}
+        {/* Previous Button */}
         <PaginationItem>
-          {hasPrevious ? (
-            <PaginationPrevious
-              href={`/articles?${prevPageParams.toString()}`}
-            />
+          {hasPrevPage ? (
+            <PaginationPrevious href={createPageURL(page - 1)} />
           ) : (
-            <Button variant="primary" disabled>
-              <ChevronLeft /> Previous
+            <Button variant="outline" disabled className="gap-1">
+              <ChevronLeft className="h-4 w-4" />
+              Previous
             </Button>
           )}
         </PaginationItem>
 
-        {/* Current page */}
-        <PaginationItem>
-          <PaginationLink href="#">{page}</PaginationLink>
-        </PaginationItem>
+        {/* Page Numbers */}
+        {visiblePages().map((p, index) => (
+          <PaginationItem key={index}>
+            {p === "..." ? (
+              <Button variant="ghost" disabled>
+                ...
+              </Button>
+            ) : (
+              <PaginationLink
+                href={createPageURL(Number(p))}
+                isActive={p === page}
+              >
+                {p}
+              </PaginationLink>
+            )}
+          </PaginationItem>
+        ))}
 
-        {/* Pagination Ellipsis */}
+        {/* Next Button */}
         <PaginationItem>
-          <PaginationEllipsis />
-        </PaginationItem>
-
-        {/* Disable PaginationNext if there's no next page */}
-
-        <PaginationItem>
-          {hasNext ? (
-            <PaginationNext href={`/articles?${nextPageParams.toString()}`} />
+          {hasNextPage ? (
+            <PaginationNext href={createPageURL(page + 1)} />
           ) : (
-            <Button variant="primary" disabled>
-              Next <ChevronRight />
+            <Button variant="outline" disabled className="gap-1">
+              Next
+              <ChevronRight className="h-4 w-4" />
             </Button>
           )}
         </PaginationItem>

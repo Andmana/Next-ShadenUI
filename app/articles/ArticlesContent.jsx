@@ -8,7 +8,7 @@ const DEFAULT_LIMIT = "9";
 
 const ArticlesContent = async ({ searchParams }) => {
   // Validate and sanitize searchParams
-  const { page, limit, category, title } = searchParams || {};
+  const { page, limit, category, title } = (await searchParams) || {};
 
   // Construct query parameters safely
   const queryParams = new URLSearchParams();
@@ -52,6 +52,13 @@ const ArticlesContent = async ({ searchParams }) => {
             ))}
           </div>
         )}
+        <div className=" w-full mt-9 flex justify-center items-center gap-2 text-slate-900">
+          <Pagin
+            itemsCount={articles.length}
+            limit={limit || DEFAULT_LIMIT}
+            page={page || DEFAULT_PAGE}
+          />
+        </div>
       </>
     );
   } catch (error) {

@@ -37,7 +37,7 @@ export function SelectCategories() {
         const validCategories = response.data.data.filter(
           (category) => category.id && category.name
         );
-        setCategories(validCategories);
+        setCategories(validCategories.filter((category) => category.id != ""));
       } catch (err) {
         console.error("Failed to fetch categories:", err);
         setError(err.message || "Failed to load categories");

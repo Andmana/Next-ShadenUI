@@ -1,22 +1,15 @@
 import ArticleCard from "@/components/cards/ArticleCard";
 import { ErrorDisplay } from "@/components/errorDIsplay/ErrorDisplay";
+import { getArticles } from "@/db/articles";
 import axios from "axios";
 
 const OtherArticles = async ({ categoryId }) => {
-  const queryParams = new URLSearchParams({ category: categoryId, limit: "3" });
   try {
-    const res = await axios.get(
-      `https://test-fe.mysellerpintar.com/api/articles?${queryParams.toString()}`,
-      {
-        timeout: 5000,
-        validateStatus: (status) => status >= 200 && status < 300,
-      }
-    );
+    const mockApiData = getArticles(null, categoryId, 1, 3);
 
-    if (!res.data?.data) {
-      throw new Error("Invalid data structure from API");
-    }
-    const articles = res.data.data;
+    if (!mockApiData) throw new Error("Fail");
+
+    const articles = mockApiData?.data ?? [];
 
     return (
       <section className="px-5 sm:px-45 pt-10 pb-15 sm:pt-10 sm:pb-25 ">

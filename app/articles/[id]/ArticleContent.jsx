@@ -7,7 +7,7 @@ const ArticleContent = ({ article }) => {
         {/* Article Header */}
         <header className="flex flex-col items-center gap-4">
           <p className="text-slate-600 flex gap-1">
-            <span>{formatToLongDate(article.updatedAt)}</span>
+            <span>{formatToLongDate(article.createdAt)}</span>
             <span>·</span>
             <span>{article.user.username}</span>
           </p>

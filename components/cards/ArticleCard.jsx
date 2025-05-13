@@ -12,7 +12,7 @@ const ArticleCard = ({ article }) => {
       <div className="w-full flex flex-col gap-2">
         {/* Update date */}
         <p className="text-sm text-slate-600">
-          {formatToLongDate(article.updatedAt)}
+          {formatToLongDate(article.createdAt)}
         </p>
 
         {/* Title */}

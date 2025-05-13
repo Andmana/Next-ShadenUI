@@ -13,7 +13,7 @@ const AdminArticles = async ({ searchParams }) => {
   const { page, category, title, limit } = searchParams || {};
 
   try {
-    const mockApiData = await getArticles(
+    const mockApiData = getArticles(
       title,
       category,
       page || DEFAULT_PAGE,

@@ -12,6 +12,9 @@ export const articles = [
       name: "Science",
       createdAt: "2025-05-12T18:30:00.000Z",
     },
+    user: {
+      username: "Leonardo Watch",
+    },
   },
   {
     id: "e9d8c7b6-a5f4-4321-8765-43210fedcba98",
@@ -25,6 +28,9 @@ export const articles = [
       id: "a1b2c3d4-e5f6-4789-8901-23456789abcd",
       name: "Science",
       createdAt: "2025-05-12T18:30:00.000Z",
+    },
+    user: {
+      username: "Leonardo Watch",
     },
   },
   {
@@ -40,6 +46,9 @@ export const articles = [
       name: "Science",
       createdAt: "2025-05-12T18:30:00.000Z",
     },
+    user: {
+      username: "Leonardo Watch",
+    },
   },
   {
     id: "c1b0a998-87d4-4543-6543-210fedcba98765",
@@ -53,6 +62,9 @@ export const articles = [
       id: "a1b2c3d4-e5f6-4789-8901-23456789abcd",
       name: "Science",
       createdAt: "2025-05-12T18:30:00.000Z",
+    },
+    user: {
+      username: "Leonardo Watch",
     },
   },
   {
@@ -68,6 +80,9 @@ export const articles = [
       name: "Science",
       createdAt: "2025-05-12T18:30:00.000Z",
     },
+    user: {
+      username: "Leonardo Watch",
+    },
   },
   {
     id: "98765432-10fe-4dcba-9876-543210fedcba9",
@@ -81,6 +96,9 @@ export const articles = [
       id: "bcdefa01-2345-4678-90ab-cdef01234567",
       name: "Travel",
       createdAt: "2025-05-12T18:30:00.000Z",
+    },
+    user: {
+      username: "Leonardo Watch",
     },
   },
   {
@@ -96,6 +114,9 @@ export const articles = [
       name: "Travel",
       createdAt: "2025-05-12T18:30:00.000Z",
     },
+    user: {
+      username: "Leonardo Watch",
+    },
   },
   {
     id: "76543210-fedc-4ba98-7654-3210fedcba987",
@@ -109,6 +130,9 @@ export const articles = [
       id: "bcdefa01-2345-4678-90ab-cdef01234567",
       name: "Travel",
       createdAt: "2025-05-12T18:30:00.000Z",
+    },
+    user: {
+      username: "Leonardo Watch",
     },
   },
   {
@@ -124,6 +148,9 @@ export const articles = [
       name: "Food",
       createdAt: "2025-05-12T18:30:00.000Z",
     },
+    user: {
+      username: "Leonardo Watch",
+    },
   },
   {
     id: "543210fe-dcba-4b876-5432-10fedcba98765",
@@ -137,6 +164,9 @@ export const articles = [
       id: "cdefab12-3456-4567-abcd-ef0123456789",
       name: "Food",
       createdAt: "2025-05-12T18:30:00.000Z",
+    },
+    user: {
+      username: "Leonardo Watch",
     },
   },
   {
@@ -152,6 +182,9 @@ export const articles = [
       name: "Food",
       createdAt: "2025-05-12T18:30:00.000Z",
     },
+    user: {
+      username: "Leonardo Watch",
+    },
   },
   {
     id: "3210fedc-ba98-4d654-3210-fedcba9876543",
@@ -166,6 +199,9 @@ export const articles = [
       name: "Culture",
       createdAt: "2025-05-12T18:30:00.000Z",
     },
+    user: {
+      username: "Leonardo Watch",
+    },
   },
   {
     id: "210fedcb-a987-4e543-210f-edcba98765432",
@@ -179,6 +215,9 @@ export const articles = [
       id: "defabc23-4567-4456-bcde-f0123456789a",
       name: "Culture",
       createdAt: "2025-05-12T18:30:00.000Z",
+    },
+    user: {
+      username: "Leonardo Watch",
     },
   },
   {

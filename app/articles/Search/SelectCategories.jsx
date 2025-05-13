@@ -10,7 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export function SelectCategories({ setCategory }) {
+export function SelectCategories({ setCategory, placeHolder }) {
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -65,10 +65,10 @@ export function SelectCategories({ setCategory }) {
   return (
     <Select onValueChange={(value) => setCategory(value)}>
       <SelectTrigger className="w-full">
-        <SelectValue placeholder="Select category" />
+        <SelectValue placeholder={placeHolder} />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value={undefined}>{" all"}</SelectItem>
+        <SelectItem value={undefined}>{" All"}</SelectItem>
         {categories.map((category) => (
           <SelectItem value={category.id} key={category.id}>
             {category.name}

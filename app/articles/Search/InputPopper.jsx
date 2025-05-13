@@ -2,8 +2,9 @@
 
 import { Search } from "lucide-react";
 import Link from "next/link";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import axios from "axios";
+import { Input } from "@/components/ui/input";
 
 const InputPopper = ({ category }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -31,6 +32,7 @@ const InputPopper = ({ category }) => {
 
     setIsLoading(true);
     try {
+      params.title = term.trim();
       const response = await axios.get(
         "https://test-fe.mysellerpintar.com/api/articles",
         {
@@ -57,58 +59,59 @@ const InputPopper = ({ category }) => {
   const handleChange = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
-    debouncedFetch(value);
-    setIsPopoverOpen(!!value); // Open popover when typing
   };
+
+  useEffect(() => {
+    debouncedFetch(searchTerm);
+    console.log("searchTerm : ", searchTerm);
+  }, [searchTerm]);
 
   const queryParams = new URLSearchParams({ ...params });
 
   return (
     <>
-      <div className="relative w-100 h-10">
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={handleChange}
-          className="w-full h-full px-3 py-2 ps-8 bg-white rounded-md"
-          placeholder="Search Articles"
-          onFocus={() => setIsPopoverOpen(true)}
-          onBlur={() => setIsPopoverOpen(false)}
-        />
-        <div className="absolute mx-auto opacity-50 hover:opacity-100 left-3 top-1/2 transform -translate-y-1/2 cursor-pointer">
-          <Link href={`/articles?${queryParams.toString()}`}>
-            <Search size={16} />
-          </Link>
-        </div>
+      <Input
+        type="text"
+        value={searchTerm}
+        onChange={handleChange}
+        className="w-full h-full px-3 py-2 ps-8 bg-white rounded-md"
+        placeholder="Search Articles"
+        onFocus={() => setIsPopoverOpen(true)}
+        onBlur={() => setIsPopoverOpen(false)}
+      />
+      <div className="absolute mx-auto opacity-50 hover:opacity-100 left-3 top-1/2 transform -translate-y-1/2 cursor-pointer">
+        <Link href={`/articles?${queryParams.toString()}`}>
+          <Search size={16} />
+        </Link>
+      </div>
 
-        <div
-          className="absolute w-full top-11/10 rounded-md px-3 py-2 bg-white"
-          style={{ scale: isPopoverOpen ? 1 : 0 }}
-          aria-hidden={isPopoverOpen ? false : true}
-        >
-          {isLoading ? (
-            <div className="py-2 text-center">Searching...</div>
-          ) : searchResults.length > 0 ? (
-            searchResults.map((article) => (
-              <div
-                key={article.id}
-                className="p-1.25 h-10 hover:bg-accent hover:text-accent-foreground flex items-center"
+      <div
+        className="absolute w-full top-11/10 rounded-md px-3 py-2 bg-white"
+        style={{ scale: isPopoverOpen ? 1 : 0 }}
+        aria-hidden={isPopoverOpen ? false : true}
+      >
+        {isLoading ? (
+          <div className="py-2 text-center">Searching...</div>
+        ) : searchResults.length > 0 ? (
+          searchResults.map((article) => (
+            <div
+              key={article.id}
+              className="p-1.25 h-10 hover:bg-accent hover:text-accent-foreground flex items-center"
+            >
+              <Link
+                href={`/articles/${article.id}`}
+                className="text-slate-900 underline font-medium w-full"
+                onClick={() => setIsPopoverOpen(false)}
               >
-                <Link
-                  href={`/articles/${article.id}`}
-                  className="text-slate-900 underline font-medium w-full"
-                  onClick={() => setIsPopoverOpen(false)}
-                >
-                  {article.title}
-                </Link>
-              </div>
-            ))
-          ) : searchTerm ? (
-            <div className="p-2 text-center">No results found</div>
-          ) : (
-            <div className="p-2 text-center">Start typing to search</div>
-          )}
-        </div>
+                {article.title}
+              </Link>
+            </div>
+          ))
+        ) : searchTerm ? (
+          <div className="p-2 text-center">No results found</div>
+        ) : (
+          <div className="p-2 text-center">Start typing to search</div>
+        )}
       </div>
     </>
   );

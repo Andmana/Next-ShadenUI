@@ -1,11 +1,20 @@
 import AdminLayout from "@/components/Layout/AdminLayout";
-import ProfilePopper from "@/components/navbar/ProfilePopper";
-import Sidebar from "@/components/sidebar/Sidebar";
+import { TableAction, TableDescription } from "@/components/tables/TableHeader";
+import SearchArticles from "../Search/SearchArticles";
 
 const AdminArticles = () => {
   return (
-    <AdminLayout label="Articles">
-      <div className=""></div>
+    <AdminLayout title="Articles">
+      <div className="">
+        <TableDescription label={"Articles"} total={25} />
+        <TableAction label={"Articles"}>
+          <SearchArticles
+            categoryClass="w-[110px]"
+            categoryLabel="Category"
+            articleClass="w-60"
+          />
+        </TableAction>
+      </div>
     </AdminLayout>
   );
 };

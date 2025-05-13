@@ -15,8 +15,7 @@ import React from "react";
 const TableArticles = ({ articles }) => {
   return (
     <div>
-      <Table className="table-fixed w-full">
-        <TableCaption>A list of articles.</TableCaption>
+      <Table className="table-fixed w-full border-b-1 border-slate-200">
         <TableHeader>
           <TableRow className="bg-gray-100">
             <TableHead className="w-1/5">Thumbnails</TableHead>

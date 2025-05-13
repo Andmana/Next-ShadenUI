@@ -83,7 +83,7 @@ function TableCell({ className, ...props }) {
     <td
       data-slot="table-cell"
       className={cn(
-        "px-4 py-3 text-center align-middle text-slate-600  [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+        "px-4 py-3 text-center align-middle text-slate-600 bg-gray-50  [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
         className
       )}
       {...props}

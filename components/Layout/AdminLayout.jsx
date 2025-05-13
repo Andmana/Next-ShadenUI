@@ -18,7 +18,7 @@ const AdminLayout = ({ children, title }) => {
         {/* Main content */}
         <main className="w-full min-h-full bg-slate-100 pt-6 px-6 grid grid-cols-1">
           {/* Add article content here */}
-          <div className="flex-1 rounded-md bg-gray-50  border-1 border-slate-200">
+          <div className="flex-1 rounded-md bg-gray-50  border-1 border-slate-200 mb-40 overflow-hidden">
             {children}
           </div>
         </main>

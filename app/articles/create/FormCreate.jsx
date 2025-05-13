@@ -7,8 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useActionState } from "react";
 import { CreateArticle } from "./actions";
-import { Button } from "@/components/ui/button";
 import ValidationMessage from "@/components/forms/ValidationMessage";
+import FormAction from "./FormAction";
 
 const FormCreate = () => {
   const [state, createAction] = useActionState(CreateArticle, undefined);
@@ -54,15 +54,16 @@ const FormCreate = () => {
           <ValidationMessage message={state.errors.content} />
         )}
 
-        <div className="flex justify-end gap-2 py-4">
-          <Button type="submit" className="bg-blue-600 text-white">
-            Upload
-          </Button>
-        </div>
-        <div className="flex flex-none">
-          {state?.errors?.root && (
-            <ValidationMessage message={state.errors.root} />
-          )}
+        <div className="flex  flex-col items-end gap-2 py-4">
+          {/* Message Validation */}
+          <div className="flex justify-end gap-2">
+            {state?.errors?.root && (
+              <ValidationMessage message={state.errors.root} />
+            )}
+          </div>
+
+          {/* Button  action */}
+          <FormAction />
         </div>
       </div>
     </form>

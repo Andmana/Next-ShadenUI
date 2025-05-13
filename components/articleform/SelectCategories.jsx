@@ -10,7 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export function SelectCategories() {
+export function SelectCategories({ defaultValue = null }) {
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -66,7 +66,7 @@ export function SelectCategories() {
   }
 
   return (
-    <Select name="category">
+    <Select defaultValue={defaultValue} name="category">
       <SelectTrigger className="w-full">
         <SelectValue placeholder="Select category" />
       </SelectTrigger>

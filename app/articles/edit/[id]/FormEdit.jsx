@@ -6,9 +6,9 @@ import FormAction from "../../create/FormAction";
 import ValidationMessage from "@/components/forms/ValidationMessage";
 import InputGroup from "@/components/forms/InputGroup";
 import { Input } from "@/components/ui/input";
-import SelectCategories from "./SelectCategories";
 import { Textarea } from "@/components/ui/textarea";
 import ImageInput from "@/components/articleform/ImageInput";
+import SelectCategories from "@/components/articleform/SelectCategories";
 
 const FormEdit = ({ article }) => {
   const [state, editAction] = useActionState(editArticle, undefined);

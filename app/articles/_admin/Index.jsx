@@ -4,7 +4,7 @@ import SearchArticles from "../Search/SearchArticles";
 import TableArticles from "./TableArticles";
 import axios from "axios";
 import Pagin from "@/components/pagination/Pagination";
-import { ErrorDisplay } from "@/components/errorDisplay/ErrorDisplay"; // fixed casing
+import { ErrorDisplay } from "../../../components/errorDIsplay/ErrorDisplay";
 
 const DEFAULT_PAGE = "1";
 const DEFAULT_LIMIT = "10";

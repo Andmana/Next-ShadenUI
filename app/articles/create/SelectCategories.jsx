@@ -71,7 +71,6 @@ export function SelectCategories() {
         <SelectValue placeholder="Select category" />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value={undefined}>{" All"}</SelectItem>
         {categories.map((category) => (
           <SelectItem value={category.id} key={category.id}>
             {category.name}

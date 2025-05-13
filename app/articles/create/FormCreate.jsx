@@ -38,7 +38,6 @@ const FormCreate = () => {
         <InputGroup label="Category">
           <SelectCategories />
         </InputGroup>
-
         <div className="flex flex-col gap-1.5">
           <p className="text-sm text-slate-500">
             The existing category list can be seen in the{" "}

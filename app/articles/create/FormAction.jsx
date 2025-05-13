@@ -1,3 +1,5 @@
+"use client";
+
 import SubmitButton from "@/components/forms/SubmitButton";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";

@@ -18,3 +18,7 @@ export function findUser(username, password) {
     (user) => user.username === username && user.password === password
   );
 }
+
+export function findUserByToken(token) {
+  return users.find((user) => user.token === token);
+}

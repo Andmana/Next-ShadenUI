@@ -1,6 +1,7 @@
 import { ErrorDisplay } from "@/components/errorDIsplay/ErrorDisplay";
 import Footer from "@/components/footer/Footer";
 import Navbar from "@/components/navbar/Navbar";
+import { findUserByToken } from "@/db/users";
 import { verifySession } from "@/lib/sessions";
 import axios from "axios";
 import Link from "next/link";
@@ -8,24 +9,11 @@ import Link from "next/link";
 export default async function Profile() {
   try {
     const { token } = await verifySession();
-    const res = await axios.get(
-      "https://test-fe.mysellerpintar.com/api/auth/profile",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        timeout: 5000,
-        validateStatus: (status) => status >= 200 && status < 300,
-      }
-    );
+    const data = findUserByToken(token);
 
-    if (!res.data) {
+    if (!data) {
       throw new Error("Invalid data structure from API");
     }
-
-    console.log("token :", token);
-
-    const data = res.data;
 
     return (
       <div className="w-full h-svh sm:h-screen bg-white flex flex-col">
@@ -44,7 +32,7 @@ export default async function Profile() {
               {/* Detail Row */}
               <div className="w-full flex flex-col gap-3 text-base">
                 <DetailRow label={"Username"} value={data.username} />
-                <DetailRow label={"Password"} value={"*******"} />
+                <DetailRow label={"Password"} value={data.password} />
                 <DetailRow label={"Role"} value={data.role} />
               </div>
 

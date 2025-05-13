@@ -8,8 +8,8 @@ const DEFAULT_LIMIT = "9";
 
 const ArticlesContent = async ({ searchParams }) => {
   // Validate and sanitize searchParams
-  const { page, limit, category, title } = (await searchParams) || {};
-
+  const { page, limit, category, title } = searchParams;
+  console.log(page, limit, category, title);
   // Construct query parameters safely
   const queryParams = new URLSearchParams();
   queryParams.set("page", page || DEFAULT_PAGE);
@@ -30,8 +30,9 @@ const ArticlesContent = async ({ searchParams }) => {
       throw new Error("Invalid data structure from API");
     }
 
-    const articles = res.data.data;
+    const articles = res.data.data || [];
     const totalArticles = res.data.total || 0;
+    console.log("articles : ", articles.length);
 
     return (
       <>

@@ -1,6 +1,6 @@
 import AdminLayout from "@/components/Layout/AdminLayout";
 import { TableAction, TableDescription } from "@/components/tables/TableHeader";
-import SearchArticles from "../Search/SearchArticles";
+import SearchArticles from "../../../components/articleSearch/SearchArticles";
 import TableArticles from "./TableArticles";
 import axios from "axios";
 import Pagin from "@/components/pagination/Pagination";

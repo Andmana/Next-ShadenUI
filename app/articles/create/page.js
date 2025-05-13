@@ -1,9 +1,8 @@
-import InputGroup from "@/components/forms/InputGroup";
 import AdminLayout from "@/components/Layout/AdminLayout";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import ImageInput from "./ImageInput";
+import FormCreate from "./FormCreate";
 
 const CreateArticle = () => {
   return (
@@ -15,11 +14,8 @@ const CreateArticle = () => {
             <span className="text-base font-medium">Create Articles</span>
           </Link>
         </div>
-        <div className="p-6 flex flex-col gap-6">
-          <InputGroup label={"Thumbnail"}>
-            <ImageInput />
-          </InputGroup>
-        </div>
+
+        <FormCreate />
       </div>
     </AdminLayout>
   );

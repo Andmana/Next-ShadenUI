@@ -2,39 +2,28 @@ import AdminLayout from "@/components/Layout/AdminLayout";
 import { TableAction, TableDescription } from "@/components/tables/TableHeader";
 import SearchArticles from "../../../components/articleSearch/SearchArticles";
 import TableArticles from "./TableArticles";
-import axios from "axios";
 import Pagin from "@/components/pagination/Pagination";
 import { ErrorDisplay } from "../../../components/errorDIsplay/ErrorDisplay";
+import { getArticles } from "@/db/articles";
 
-const DEFAULT_PAGE = "1";
-const DEFAULT_LIMIT = "10";
-const DEFAULT_SORT_BY = "createdAt";
-const DEFAULT_SORT_ORDER = "desc";
+const DEFAULT_PAGE = 1;
+const DEFAULT_LIMIT = 9;
 
 const AdminArticles = async ({ searchParams }) => {
-  const { page, category, title } = searchParams || {};
-
-  const queryParams = new URLSearchParams({
-    limit: DEFAULT_LIMIT,
-    sortBy: DEFAULT_SORT_BY,
-    sortOrder: DEFAULT_SORT_ORDER,
-  });
-
-  queryParams.set("page", page || DEFAULT_PAGE);
-  if (category) queryParams.set("category", category); // auto-encoded
-  if (title) queryParams.set("title", title);
+  const { page, category, title, limit } = searchParams || {};
 
   try {
-    const res = await axios.get(
-      `https://test-fe.mysellerpintar.com/api/articles?${queryParams.toString()}`,
-      {
-        timeout: 5000,
-        validateStatus: (status) => status >= 200 && status < 300,
-      }
+    const mockApiData = await getArticles(
+      title,
+      category,
+      page || DEFAULT_PAGE,
+      limit || DEFAULT_LIMIT
     );
 
-    const articles = res.data?.data ?? [];
-    const totalArticles = res.data?.total ?? 0;
+    if (!mockApiData) throw new Error("Fail");
+
+    const articles = mockApiData?.data ?? [];
+    const totalArticles = mockApiData.total;
 
     return (
       <AdminLayout title="Articles">

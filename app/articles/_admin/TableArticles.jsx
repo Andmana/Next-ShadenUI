@@ -41,7 +41,7 @@ const TableArticles = ({ articles }) => {
                   {article.title}
                 </TableCell>
                 <TableCell>{article.category.name}</TableCell>
-                <TableCell>{formatToLongDate(article.updatedAt)}</TableCell>
+                <TableCell>{formatToLongDate(article.createdAt)}</TableCell>
                 <TableCell>
                   <div className="flex gap-3 justify-center">
                     <Link

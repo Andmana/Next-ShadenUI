@@ -8,7 +8,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { categories as categoriesDb } from "@/db/categories";
 
 export function SelectCategories({ setCategory, placeHolder }) {
   const [categories, setCategories] = useState([]);
@@ -18,23 +18,7 @@ export function SelectCategories({ setCategory, placeHolder }) {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(
-          "https://test-fe.mysellerpintar.com/api/categories",
-          {
-            timeout: 5000,
-            validateStatus: (status) => status >= 200 && status < 300,
-          }
-        );
-
-        if (!response.data?.data) {
-          throw new Error("Invalid data structure from API");
-        }
-
-        // Filter out categories with empty IDs or names
-        const validCategories = response.data.data.filter(
-          (category) => category.id && category.name
-        );
-        setCategories(validCategories);
+        setCategories(categoriesDb);
       } catch (err) {
         console.error("Failed to fetch categories:", err);
         setError(err.message || "Failed to load categories");

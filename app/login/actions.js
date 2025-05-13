@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { redirect } from "next/navigation";
 import { createSession, deleteSession } from "@/lib/sessions";
-import { users } from "@/db/users";
+import { findUser, users } from "@/db/users";
 
 const loginSchema = z.object({
   username: z.string().min(1, { message: "Username is required" }).trim(),
@@ -22,10 +22,9 @@ export async function login(prevState, formData) {
   const { username, password } = result.data;
 
   try {
-    const user = users.find(
-      (user) => user.username === username && user.password === password
-    );
-    if (!user) throw new Error("Invalid user name");
+    const user = findUser(username, password);
+    if (!user) throw new Error("Invalid username or password");
+
     await createSession({
       username: user.username,
       role: user.role,

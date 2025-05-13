@@ -12,3 +12,9 @@ export const users = [
     token: "aaadwas-ba98-4d654-3210-fedcba9876543",
   },
 ];
+
+export function findUser(username, password) {
+  return users.find(
+    (user) => user.username === username && user.password === password
+  );
+}

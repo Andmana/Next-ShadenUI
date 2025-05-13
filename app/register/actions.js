@@ -2,6 +2,8 @@
 
 import { z } from "zod";
 import axios from "axios";
+import { findUser, users } from "@/db/users";
+import { generateUUIDLike } from "@/lib/utils";
 
 const registrationSchema = z.object({
   username: z.string().min(1, { message: "Username is required" }).trim(),
@@ -24,16 +26,16 @@ export async function register(prevState, formData) {
   const { username, password, role } = result.data;
 
   try {
-    const postApiRes = await axios.post(
-      "https://test-fe.mysellerpintar.com/api/auth/register",
-      { username, password, role },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        timeout: 5000, // Add timeout
-      }
-    );
+    const user = findUser(username, password);
+    if (user) throw new Error("Username already use");
+
+    // Create new data
+    users.push({
+      username,
+      password,
+      role,
+      token: generateUUIDLike(),
+    });
   } catch (error) {
     console.error("Login error:", error);
     const msg =

@@ -7,7 +7,7 @@ import { LogOut } from "lucide-react";
 
 const Sidebar = () => {
   return (
-    <aside className="w-[267px]  bg-blue-600 py-6 pb-4 border-b-1 border-b-slate-200">
+    <aside className="w-[267px] h-full bg-blue-600 py-6 pb-4 border-b-1 border-b-slate-200">
       <div className="flex flex-col gap-6">
         <Link className="relative px-8 flex justify-start" href={"/"}>
           <LogoIpsum isWhhite={true} />

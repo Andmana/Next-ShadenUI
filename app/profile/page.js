@@ -37,7 +37,9 @@ export default async function Profile() {
             <div className="w-full flex flex-col gap-6">
               {/* Avatar */}
               <div className="relative m-auto w-17 h-17 rounded-full bg-[#BFDBFE] flex justify-center items-center ">
-                <span className="text-base font-medium">A</span>
+                <span className="text-base font-medium">
+                  {data.username[0]}
+                </span>
               </div>
               {/* Detail Row */}
               <div className="w-full flex flex-col gap-3 text-base">

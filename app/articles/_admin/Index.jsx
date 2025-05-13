@@ -3,13 +3,14 @@ import { TableAction, TableDescription } from "@/components/tables/TableHeader";
 import SearchArticles from "../Search/SearchArticles";
 import TableArticles from "./TableArticles";
 import axios from "axios";
+import Pagin from "@/components/pagination/Pagination";
 
 const DEFAULT_PAGE = "1";
 const DEFAULT_LIMIT = 10;
 
 const AdminArticles = async ({ searchParams }) => {
   // Validate and sanitize searchParams
-  const { page, category, title } = (await searchParams) || {};
+  const { page, category, title } = searchParams;
   const queryParams = new URLSearchParams();
   queryParams.set("page", page || DEFAULT_PAGE);
   queryParams.set("limit", DEFAULT_LIMIT);
@@ -34,7 +35,7 @@ const AdminArticles = async ({ searchParams }) => {
 
     return (
       <AdminLayout title="Articles">
-        <div className="">
+        <div>
           <TableDescription label={"Articles"} total={totalArticles} />
           <TableAction label={"Articles"}>
             <SearchArticles
@@ -48,6 +49,15 @@ const AdminArticles = async ({ searchParams }) => {
         {/* Table */}
         <div>
           <TableArticles articles={articles} />
+        </div>
+
+        {/* Pagination */}
+        <div className="px-4 py-6 bg-gray-50 border-b-1  border-b-slate-200 flex items-center justify-center">
+          <Pagin
+            _page={page || DEFAULT_PAGE}
+            totalItems={totalArticles}
+            limit={DEFAULT_LIMIT}
+          />
         </div>
       </AdminLayout>
     );

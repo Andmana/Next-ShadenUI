@@ -4,18 +4,25 @@ import SearchArticles from "../Search/SearchArticles";
 import TableArticles from "./TableArticles";
 import axios from "axios";
 import Pagin from "@/components/pagination/Pagination";
+import { ErrorDisplay } from "@/components/errorDisplay/ErrorDisplay"; // fixed casing
 
 const DEFAULT_PAGE = "1";
 const DEFAULT_LIMIT = "10";
+const DEFAULT_SORT_BY = "createdAt";
+const DEFAULT_SORT_ORDER = "desc";
 
 const AdminArticles = async ({ searchParams }) => {
-  // Validate and sanitize searchParams
-  const { page, category, title } = searchParams;
-  const queryParams = new URLSearchParams();
+  const { page, category, title } = searchParams || {};
+
+  const queryParams = new URLSearchParams({
+    limit: DEFAULT_LIMIT,
+    sortBy: DEFAULT_SORT_BY,
+    sortOrder: DEFAULT_SORT_ORDER,
+  });
+
   queryParams.set("page", page || DEFAULT_PAGE);
-  queryParams.set("limit", DEFAULT_LIMIT);
-  if (category) queryParams.set("category", encodeURIComponent(category));
-  if (title) queryParams.set("title", encodeURIComponent(title));
+  if (category) queryParams.set("category", category); // auto-encoded
+  if (title) queryParams.set("title", title);
 
   try {
     const res = await axios.get(
@@ -26,18 +33,14 @@ const AdminArticles = async ({ searchParams }) => {
       }
     );
 
-    if (!res.data?.data) {
-      throw new Error("Invalid data structure from API");
-    }
-
-    const articles = res.data.data;
-    const totalArticles = res.data.total || 0;
+    const articles = res.data?.data ?? [];
+    const totalArticles = res.data?.total ?? 0;
 
     return (
       <AdminLayout title="Articles">
         <div>
-          <TableDescription label={"Articles"} total={totalArticles} />
-          <TableAction label={"Articles"}>
+          <TableDescription label="Articles" total={totalArticles} />
+          <TableAction label="Articles">
             <SearchArticles
               categoryClass="w-[110px]"
               categoryLabel="Category"
@@ -46,12 +49,10 @@ const AdminArticles = async ({ searchParams }) => {
           </TableAction>
         </div>
 
-        {/* Table */}
         <div>
           <TableArticles articles={articles} />
         </div>
 
-        {/* Pagination */}
         <div className="px-4 py-6 bg-gray-50 border-b-1  border-b-slate-200 flex items-center justify-center">
           <Pagin
             _page={page || DEFAULT_PAGE}

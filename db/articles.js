@@ -1,3 +1,6 @@
+import { generateUUIDLike } from "@/lib/utils";
+import { categories } from "./categories";
+
 export const articles = [
   {
     id: "f8e7d6c5-b4a3-4210-9876-543210abcdef",
@@ -274,3 +277,15 @@ export function getArticles(
     limit: parseInt(limit),
   };
 }
+
+export const constructorArticle = (title, categoryId, content) => {
+  return {
+    id: generateUUIDLike(),
+    categoryId: categoryId,
+    title: title,
+    content: content,
+    imageUrl: null,
+    createdAt: new Date(),
+    category: categories.find((category) => category.id === categoryId),
+  };
+};

@@ -4,46 +4,10 @@ import { verifySession } from "@/lib/sessions";
 import { z } from "zod";
 import axios from "axios";
 import { redirect } from "next/navigation";
-
-export const uploadImage = async (file) => {
-  const { token, role } = await verifySession();
-  if (!(token && role === "Admin")) {
-    throw new Error("Unauthorized access");
-  }
-
-  try {
-    const formData = new FormData();
-    formData.append("image", file);
-
-    const response = await axios.post(
-      "https://test-fe.mysellerpintar.com/api/upload",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-        maxBodyLength: Infinity, // Important for large files
-        maxContentLength: Infinity, // Important for large files
-      }
-    );
-
-    if (!response.data || !response.data.imageUrl) {
-      throw new Error("No image URL returned from server");
-    }
-
-    return { imageUrl: response.data.imageUrl };
-  } catch (error) {
-    console.error("Server upload error:", error);
-    throw new Error(
-      error.response?.data?.message || error.message || "Image upload failed"
-    );
-  }
-};
+import { articles, constructorArticle } from "@/db/articles";
 
 const articleSchema = z.object({
   title: z.string().min(1, { message: "Please enter title" }).trim(),
-  imageUrl: z.string().min(1, { message: "Please enter picture" }),
   category: z.string().min(1, { message: "Please select category" }),
   content: z.string().min(1, { message: "Content field cannot be empty" }),
 });
@@ -68,26 +32,11 @@ export async function CreateArticle(prevState, formData) {
     };
   }
 
-  const { title, content, category, imageUrl } = result.data;
+  const { title, content, category } = result.data;
 
   try {
     // Corrected API endpoint and payload
-    const apiRes = await axios.post(
-      "https://test-fe.mysellerpintar.com/api/articles", // Changed from /api/auth/login
-      {
-        title,
-        content,
-        categoryId: category,
-        imageUrl,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        timeout: 5000,
-      }
-    );
+    articles.push(constructorArticle(title, category, content));
   } catch (error) {
     console.error("Article creation error:", error);
 

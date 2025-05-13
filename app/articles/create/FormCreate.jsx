@@ -16,13 +16,6 @@ const FormCreate = () => {
   return (
     <form action={createAction}>
       <div className="p-6 flex flex-col gap-6">
-        <InputGroup label={"Thumbnail"}>
-          <ImageInput />
-          {state?.errors?.imageUrl && (
-            <ValidationMessage message={state.errors.imageUrl} />
-          )}
-        </InputGroup>
-
         <InputGroup label="Title">
           <Input
             type="text"

@@ -6,9 +6,9 @@ import FormAction from "../../create/FormAction";
 import ValidationMessage from "@/components/forms/ValidationMessage";
 import InputGroup from "@/components/forms/InputGroup";
 import { Input } from "@/components/ui/input";
-import ImageInput from "./ImageInput";
 import SelectCategories from "./SelectCategories";
 import { Textarea } from "@/components/ui/textarea";
+import ImageInput from "@/components/articleform/ImageInput";
 
 const FormEdit = ({ article }) => {
   const [state, editAction] = useActionState(editArticle, undefined);
@@ -21,6 +21,7 @@ const FormEdit = ({ article }) => {
 
         {/* Input image */}
         <InputGroup label="Thumbnail">
+          {/* Input image */}
           <ImageInput defaultImage={article.imageUrl} />
           {state?.errors?.imageUrl && (
             <ValidationMessage message={state.errors.imageUrl} />

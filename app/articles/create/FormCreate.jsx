@@ -1,7 +1,6 @@
 "use client";
 
 import InputGroup from "@/components/forms/InputGroup";
-import ImageInput from "./ImageInput";
 import SelectCategories from "./SelectCategories";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,6 +8,7 @@ import { useActionState } from "react";
 import { CreateArticle } from "./actions";
 import ValidationMessage from "@/components/forms/ValidationMessage";
 import FormAction from "./FormAction";
+import ImageInput from "@/components/articleform/ImageInput";
 
 const FormCreate = () => {
   const [state, createAction] = useActionState(CreateArticle, undefined);

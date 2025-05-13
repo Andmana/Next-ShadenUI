@@ -4,11 +4,11 @@ import { ImagePlus } from "lucide-react";
 import { useRef, useState } from "react";
 import { uploadImage } from "./actions";
 
-const ImageInput = () => {
+const ImageInput = ({ defaultImage = null }) => {
   const [isError, setIsError] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const [preview, setPreview] = useState(null);
-  const [imageUrl, setImageUrl] = useState("");
+  const [preview, setPreview] = useState(defaultImage);
+  const [imageUrl, setImageUrl] = useState(defaultImage || "");
   const fileInputRef = useRef(null);
 
   const handleImageChange = async (e) => {

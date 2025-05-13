@@ -1,7 +1,6 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -11,6 +10,7 @@ import { formatToLongDate } from "@/utils/dateformat";
 import Link from "next/link";
 
 import React from "react";
+import DeleteArticleButton from "./DeleteArticleButton";
 
 const TableArticles = ({ articles }) => {
   return (
@@ -38,7 +38,7 @@ const TableArticles = ({ articles }) => {
                   />
                 </TableCell>
                 <TableCell className="text-start whitespace-normal break-words">
-                  ${article.title}
+                  {article.title}
                 </TableCell>
                 <TableCell>{article.category.name}</TableCell>
                 <TableCell>{formatToLongDate(article.updatedAt)}</TableCell>
@@ -56,7 +56,9 @@ const TableArticles = ({ articles }) => {
                     >
                       Edit
                     </Link>
-                    <button className="text-red-500 underline">Delete</button>
+                    <DeleteArticleButton articleId={article.id}>
+                      <button className="text-red-500 underline">Delete</button>
+                    </DeleteArticleButton>
                   </div>
                 </TableCell>
               </TableRow>

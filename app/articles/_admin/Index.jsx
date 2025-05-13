@@ -6,7 +6,7 @@ import axios from "axios";
 import Pagin from "@/components/pagination/Pagination";
 
 const DEFAULT_PAGE = "1";
-const DEFAULT_LIMIT = 10;
+const DEFAULT_LIMIT = "10";
 
 const AdminArticles = async ({ searchParams }) => {
   // Validate and sanitize searchParams

@@ -65,7 +65,7 @@ const Pagin = ({ _page, limit, totalItems }) => {
           {hasPrevPage ? (
             <PaginationPrevious href={createPageURL(page - 1)} />
           ) : (
-            <Button variant="outline" disabled className="gap-1">
+            <Button variant="primary" disabled className="gap-1">
               <ChevronLeft className="h-4 w-4" />
               Previous
             </Button>
@@ -95,7 +95,7 @@ const Pagin = ({ _page, limit, totalItems }) => {
           {hasNextPage ? (
             <PaginationNext href={createPageURL(page + 1)} />
           ) : (
-            <Button variant="outline" disabled className="gap-1">
+            <Button variant="primary" disabled className="gap-1">
               Next
               <ChevronRight className="h-4 w-4" />
             </Button>

@@ -59,12 +59,8 @@ const InputPopper = ({ category }) => {
   const handleChange = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
+    debouncedFetch(value);
   };
-
-  useEffect(() => {
-    debouncedFetch(searchTerm);
-    console.log("searchTerm : ", searchTerm);
-  }, [searchTerm]);
 
   const queryParams = new URLSearchParams({ ...params });
 

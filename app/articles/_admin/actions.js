@@ -1,9 +1,10 @@
 // app/actions/article.ts
 "use server";
 
+import { articles } from "@/db/articles";
 import { verifySession } from "@/lib/sessions";
-import axios from "axios";
 import { revalidatePath } from "next/cache";
+import { array } from "zod";
 
 export async function deleteArticle(articleId) {
   const { token } = await verifySession();
@@ -13,19 +14,8 @@ export async function deleteArticle(articleId) {
   }
 
   try {
-    const response = await axios.delete(
-      `https://test-fe.mysellerpintar.com/api/articles/${articleId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        timeout: 5000,
-      }
-    );
-
-    if (response.status !== 200) {
-      return { error: "Failed to delete article" };
-    }
+    const idx = articles.findIndex((item) => item.id === articleId);
+    articles.splice(idx, 1);
 
     // Revalidate the cache for the articles page
     revalidatePath("/articles");

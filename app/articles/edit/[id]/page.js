@@ -1,27 +1,16 @@
 import { ErrorDisplay } from "@/components/errorDIsplay/ErrorDisplay";
 import AdminLayout from "@/components/Layout/AdminLayout";
-import axios from "axios";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import FormEdit from "./FormEdit";
+import { getArticleById } from "@/db/articles";
 
 const Page = async ({ params }) => {
   const { id } = await params;
+  console.log("id : ", id);
   try {
-    const res = await axios.get(
-      `https://test-fe.mysellerpintar.com/api/articles/${id}`,
-      {
-        timeout: 5000,
-        validateStatus: (status) => status >= 200 && status < 300,
-      }
-    );
-
-    if (!res.data) {
-      throw new Error("Invalid data structure from API");
-    }
-
-    const article = res.data;
+    const article = getArticleById(id);
 
     return (
       <AdminLayout title={"Article"}>

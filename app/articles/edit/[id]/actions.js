@@ -1,21 +1,20 @@
 "use server";
 
+import { articles, getArticleById } from "@/db/articles";
+import { categories } from "@/db/categories";
 import { verifySession } from "@/lib/sessions";
-import axios from "axios";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
 const articleSchema = z.object({
   id: z.string().min(1, { message: "Please enter title" }).trim(),
   title: z.string().min(1, { message: "Please enter title" }).trim(),
-  imageUrl: z.string().min(1, { message: "Please enter picture" }),
   category: z.string().min(1, { message: "Please select category" }),
   content: z.string().min(1, { message: "Content field cannot be empty" }),
 });
 
 export async function editArticle(prevState, formData) {
-  console.log("formdata: ", formData);
-
   const { token, role } = await verifySession();
   if (!(token && role === "Admin")) {
     return {
@@ -33,26 +32,17 @@ export async function editArticle(prevState, formData) {
     };
   }
 
-  const { title, content, category, imageUrl, id } = result.data;
+  const { title, content, category, id } = result.data;
 
   try {
-    // Corrected API endpoint and payload
-    const apiRes = await axios.put(
-      `https://test-fe.mysellerpintar.com/api/articles/` + id, // Changed from /api/auth/login
-      {
-        title,
-        content,
-        categoryId: category,
-        imageUrl,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        timeout: 5000,
-      }
-    );
+    const idx = articles.findIndex((item) => item.id === id);
+    console.log("title : ", articles[idx].title);
+    articles[idx].title = title;
+    articles[idx].categoryId = category;
+    articles[idx].content = content;
+    articles[idx].category = categories.find((item) => item.id === category);
+
+    revalidatePath("/articles");
   } catch (error) {
     console.error("Article Upload:", error);
 

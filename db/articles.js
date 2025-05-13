@@ -250,7 +250,6 @@ export function getArticles(
   page = 1,
   limit = 9
 ) {
-  console.log(title, categoryId, page, limit);
   const filteredArticles = articles.filter((article) => {
     let titleMatch = true;
     let categoryIdMatch = true;

@@ -7,7 +7,6 @@ import ValidationMessage from "@/components/forms/ValidationMessage";
 import InputGroup from "@/components/forms/InputGroup";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import ImageInput from "@/components/articleform/ImageInput";
 import SelectCategories from "@/components/articleform/SelectCategories";
 
 const FormEdit = ({ article }) => {
@@ -18,15 +17,6 @@ const FormEdit = ({ article }) => {
       <div className="p-6 flex flex-col gap-6">
         {/* Input Id */}
         <input type="text" name="id" value={article.id} readOnly hidden />
-
-        {/* Input image */}
-        <InputGroup label="Thumbnail">
-          {/* Input image */}
-          <ImageInput defaultImage={article.imageUrl} />
-          {state?.errors?.imageUrl && (
-            <ValidationMessage message={state.errors.imageUrl} />
-          )}
-        </InputGroup>
 
         {/* Input Title */}
         <InputGroup label="Title">

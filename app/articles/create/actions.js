@@ -39,19 +39,6 @@ export async function CreateArticle(prevState, formData) {
     articles.push(constructorArticle(title, category, content));
   } catch (error) {
     console.error("Article creation error:", error);
-
-    // Improved error handling
-    let errorMessage = "Failed to create article";
-    if (error.response) {
-      if (error.response.data?.message) {
-        errorMessage = error.response.data.message;
-      } else if (error.response.status === 401) {
-        errorMessage = "Unauthorized - Please login again";
-      } else if (error.response.status === 400) {
-        errorMessage = "Invalid data submitted";
-      }
-    }
-
     return {
       errors: {
         root: [errorMessage],
